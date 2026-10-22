@@ -1,0 +1,3381 @@
+/* ==========================================================================
+   PREMIUM LUXURY WEDDING INVITATION — CHI. SUMANTH & CHI. LA. SOU. KEERTHI
+   Design System & Styling — Inspired by Bespoke Letterpress Stationery
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. CSS Custom Properties / Design Tokens
+   -------------------------------------------------------------------------- */
+:root {
+  /* Paper & Backgrounds */
+  --bg-parchment: #FBF8F5;
+  --bg-paper-warm: #F7F2EE;
+  --bg-paper-cream: #FAF6F0;
+  --bg-paper-dark: #ECE3D6;
+  --bg-envelope: #F6F0E6;
+  --bg-envelope-inner: #EDE2D0;
+  
+  /* Primary Royal Burgundy Accents */
+  --burgundy-950: #330712;
+  --burgundy-900: #4A0E1C;
+  --burgundy-800: #5E1224;
+  --burgundy-700: #7E1B32;
+  --burgundy-600: #9B2440;
+  --burgundy-shadow: rgba(74, 14, 28, 0.35);
+
+  /* Antique Metallic Golds & Bronzes */
+  --gold-antique: #C5A880;
+  --gold-dark: #9E7D47;
+  --gold-light: #DFC59B;
+  --gold-subtle: rgba(197, 168, 128, 0.28);
+  --gold-border: rgba(197, 168, 128, 0.45);
+
+  /* Typography Colors */
+  --text-main: #2C2625;
+  --text-lead: #3D3534;
+  --text-muted: #6D645F;
+  --text-light: #8E8580;
+  --text-gold: #9E7D47;
+
+  /* Floral & Botanical Hues */
+  --rose-dusty: #D99A9C;
+  --rose-blush: #F0CBC9;
+  --sage-olive: #78866B;
+
+  /* Typography Families */
+  --font-script: 'Pinyon Script', cursive;
+  --font-flourish: 'Great Vibes', cursive;
+  --font-serif-display: 'Playfair Display', Georgia, serif;
+  --font-serif-body: 'Cormorant Garamond', Garamond, 'Times New Roman', serif;
+  --font-sans: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Structural Geometry */
+  --max-content-width: 480px;
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-full: 9999px;
+
+  /* Elevations */
+  --shadow-subtle: 0 4px 20px rgba(44, 38, 37, 0.05);
+  --shadow-medium: 0 10px 30px rgba(44, 38, 37, 0.08);
+  --shadow-luxury: 0 20px 50px rgba(74, 14, 28, 0.12);
+  --shadow-seal: 0 12px 28px rgba(74, 14, 28, 0.32), 0 4px 8px rgba(0, 0, 0, 0.12);
+}
+
+/* --------------------------------------------------------------------------
+   2. Reset & Baseline Styles
+   -------------------------------------------------------------------------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-serif-body);
+  background-color: #EFE7DC;
+  background-image: 
+    radial-gradient(circle at 50% 10%, rgba(255, 255, 255, 0.6) 0%, transparent 60%),
+    linear-gradient(180deg, #F5EDE2 0%, #E8DEC8 100%);
+  color: var(--text-main);
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+  -webkit-font-smoothing: antialiased;
+}
+
+body.locked-scroll {
+  overflow: hidden;
+  height: 100vh;
+}
+
+/* Accessible focus styling */
+:focus-visible {
+  outline: 2px solid var(--gold-antique);
+  outline-offset: 3px;
+}
+
+/* --------------------------------------------------------------------------
+   3. SECTION 1: THE BESPOKE ENVELOPE GATEWAY (HERO SCREEN)
+   -------------------------------------------------------------------------- */
+.envelope-stage {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  height: 100dvh;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #F3E5DE;
+  background-image: 
+    radial-gradient(circle at 50% 30%, #FAF1EC 0%, #EBD8CE 100%);
+  transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1), visibility 1s;
+  overflow: hidden;
+}
+
+.envelope-stage.stage-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.ambient-paper-bg {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(180, 140, 130, 0.15) 1px, transparent 0);
+  background-size: 24px 24px;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.envelope-scene {
+  perspective: 1400px;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  max-width: 440px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Ambient contact shadow under envelope */
+.envelope-shadow {
+  position: absolute;
+  bottom: 12px;
+  width: 86%;
+  height: 36px;
+  background: radial-gradient(ellipse at center, rgba(100, 60, 50, 0.25) 0%, transparent 75%);
+  border-radius: 50%;
+  transition: transform 1s ease, opacity 1s ease;
+}
+
+/* 3D Envelope Container — Mobile-First Full Viewport */
+.envelope-card-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(160deg, #F9EFE9 0%, #F4E4DC 100%);
+  border-radius: 0px;
+  box-shadow: 
+    0 15px 45px rgba(90, 50, 45, 0.16),
+    0 4px 15px rgba(0, 0, 0, 0.06);
+  transform-style: preserve-3d;
+  transition: transform 0.6s ease;
+  overflow: hidden;
+}
+
+@media screen and (min-width: 480px) {
+  .envelope-card-wrapper {
+    border-radius: 16px;
+    height: min(92vh, 700px);
+    box-shadow: 
+      0 25px 60px rgba(90, 50, 45, 0.22),
+      0 8px 25px rgba(0, 0, 0, 0.1);
+  }
+}
+
+/* Envelope Base Interior Pocket */
+.envelope-back {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(175deg, #F0DFD5 0%, #E7D0C4 100%);
+  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.06);
+}
+
+/* Warm Golden Amber Light Bloom (bursts as flaps unfold) */
+.envelope-interior-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(255, 240, 180, 1) 0%, rgba(255, 205, 115, 0.95) 30%, rgba(220, 150, 60, 0.5) 60%, transparent 80%);
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 0.8s ease 0.15s, transform 0.8s ease 0.15s;
+  pointer-events: none;
+  z-index: 2;
+  filter: blur(2px);
+}
+
+.envelope-card-wrapper.unfolding .envelope-interior-glow {
+  opacity: 1;
+  transform: scale(1.35);
+}
+
+/* The Inner Letter Slip that slides upward */
+.letter-slip {
+  position: absolute;
+  top: 15%;
+  left: 6%;
+  right: 6%;
+  height: 80%;
+  background: #FAF7F2;
+  border-radius: 8px;
+  border: 1px solid var(--gold-border);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+  z-index: 3;
+  transform: translateY(0);
+  transition: transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) 0.4s, opacity 1s ease;
+}
+
+.envelope-card-wrapper.unfolding .letter-slip {
+  transform: translateY(-42%);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.16);
+}
+
+.letter-slip-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.slip-om {
+  font-size: 0.85rem;
+  color: var(--gold-dark);
+  letter-spacing: 0.1em;
+}
+
+.slip-script {
+  font-family: var(--font-script);
+  font-size: 1.8rem;
+  color: var(--burgundy-800);
+  line-height: 1;
+}
+
+.slip-names {
+  font-family: var(--font-serif-display);
+  font-size: 1.25rem;
+  color: var(--text-main);
+  letter-spacing: 0.05em;
+}
+
+.slip-date {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  color: var(--text-muted);
+}
+
+/* Fine Envelope Fold Seam Lines */
+.envelope-seams {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 7;
+}
+
+.seam-line {
+  position: absolute;
+  height: 1px;
+  background: linear-gradient(to right, rgba(175, 135, 125, 0.25), rgba(175, 135, 125, 0.45));
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.seam-top-left {
+  top: 0;
+  left: 0;
+  width: 70.7%;
+  transform-origin: 0 0;
+  transform: rotate(45deg);
+}
+
+.seam-top-right {
+  top: 0;
+  right: 0;
+  width: 70.7%;
+  transform-origin: 100% 0;
+  transform: rotate(-45deg);
+}
+
+.seam-bottom-left {
+  bottom: 0;
+  left: 0;
+  width: 70.7%;
+  transform-origin: 0 100%;
+  transform: rotate(-45deg);
+}
+
+.seam-bottom-right {
+  bottom: 0;
+  right: 0;
+  width: 70.7%;
+  transform-origin: 100% 100%;
+  transform: rotate(45deg);
+}
+
+/* 3D Envelope Flaps */
+.flap {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* Side Flaps */
+.flap-left {
+  clip-path: polygon(0 0, 0 100%, 50% 50%);
+  background: linear-gradient(90deg, #F8EEE8 0%, #EEDCD2 100%);
+  z-index: 4;
+  transform-origin: left center;
+  transition: transform 1s cubic-bezier(0.25, 1, 0.5, 1) 0.15s;
+}
+
+.flap-right {
+  clip-path: polygon(100% 0, 100% 100%, 50% 50%);
+  background: linear-gradient(270deg, #F8EEE8 0%, #EEDCD2 100%);
+  z-index: 4;
+  transform-origin: right center;
+  transition: transform 1s cubic-bezier(0.25, 1, 0.5, 1) 0.15s;
+}
+
+/* Bottom Flap */
+.flap-bottom {
+  clip-path: polygon(0 100%, 100% 100%, 50% 50%);
+  background: linear-gradient(0deg, #F4E5DC 0%, #EBD6CB 100%);
+  z-index: 5;
+  box-shadow: 0 -3px 12px rgba(100, 60, 50, 0.06);
+}
+
+/* Top Triangular Flap (The main folding lid) */
+.flap-top {
+  clip-path: polygon(0 0, 100% 0, 50% 50%);
+  background: linear-gradient(180deg, #FAF2ED 0%, #F1E0D6 100%);
+  z-index: 6;
+  transform-origin: top center;
+  box-shadow: 0 4px 14px rgba(100, 60, 50, 0.08);
+  transition: transform 1.1s cubic-bezier(0.25, 1, 0.5, 1) 0.05s, box-shadow 1s ease;
+}
+
+.envelope-card-wrapper.unfolding .flap-top {
+  transform: rotateX(175deg);
+  box-shadow: 0 -10px 25px rgba(0, 0, 0, 0.06);
+}
+
+.envelope-card-wrapper.unfolding .flap-left {
+  transform: rotateY(-35deg);
+}
+
+.envelope-card-wrapper.unfolding .flap-right {
+  transform: rotateY(35deg);
+}
+
+/* Blind-Embossed Diagonal Lace along Seams */
+.flap-lace-diagonal {
+  position: absolute;
+  background-image: url('assets/images/envelope_diagonal_lace.svg');
+  background-repeat: repeat-x;
+  background-size: 260px 48px;
+  height: 48px;
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+.lace-top-left {
+  top: 0;
+  left: 0;
+  width: 70%;
+  transform-origin: 0 0;
+  transform: rotate(45deg);
+}
+
+.lace-top-right {
+  top: 0;
+  right: 0;
+  width: 70%;
+  transform-origin: 100% 0;
+  transform: rotate(-45deg);
+}
+
+.lace-bottom-left {
+  bottom: 0;
+  left: 0;
+  width: 70%;
+  transform-origin: 0 100%;
+  transform: rotate(-45deg);
+}
+
+.lace-bottom-right {
+  bottom: 0;
+  right: 0;
+  width: 70%;
+  transform-origin: 100% 100%;
+  transform: rotate(45deg);
+}
+
+.lace-diag-tl {
+  top: 0;
+  left: 0;
+  width: 70%;
+  transform-origin: 0 0;
+  transform: rotate(45deg);
+}
+
+.lace-diag-bl {
+  bottom: 0;
+  left: 0;
+  width: 70%;
+  transform-origin: 0 100%;
+  transform: rotate(-45deg);
+}
+
+.lace-diag-tr {
+  top: 0;
+  right: 0;
+  width: 70%;
+  transform-origin: 100% 0;
+  transform: rotate(-45deg);
+}
+
+.lace-diag-br {
+  bottom: 0;
+  right: 0;
+  width: 70%;
+  transform-origin: 100% 100%;
+  transform: rotate(45deg);
+}
+
+/* Burgundy Monogram Wax Seal Button */
+.wax-seal-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  touch-action: manipulation;
+  outline: none;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.6s ease;
+}
+
+.wax-seal-glow {
+  position: absolute;
+  inset: -14px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(197, 168, 128, 0.4) 0%, transparent 70%);
+  animation: glowBreathe 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.wax-seal-disc {
+  width: 98px;
+  height: 98px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.25s ease, filter 0.25s ease;
+  filter: drop-shadow(0 12px 24px rgba(74, 14, 28, 0.4)) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+}
+
+.wax-seal-disc img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 50%;
+  display: block;
+}
+
+.wax-seal-container:hover .wax-seal-disc {
+  transform: scale(1.06);
+  filter: drop-shadow(0 15px 30px rgba(74, 14, 28, 0.5)) drop-shadow(0 6px 12px rgba(0, 0, 0, 0.2));
+}
+
+/* Realistic Seal Press Action */
+.wax-seal-container.pressed .wax-seal-disc,
+.wax-seal-container:active .wax-seal-disc {
+  transform: scale(0.92);
+  filter: drop-shadow(0 6px 14px rgba(74, 14, 28, 0.5));
+}
+
+/* Tap Hint Prompt */
+.tap-hint {
+  position: absolute;
+  top: 106px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  white-space: nowrap;
+  pointer-events: none;
+  animation: bounceHint 2.4s ease-in-out infinite;
+}
+
+.tap-chevron {
+  font-size: 1.1rem;
+  color: var(--burgundy-800);
+  font-weight: 600;
+  line-height: 1;
+}
+
+.tap-text {
+  font-family: var(--font-script);
+  font-size: 1.45rem;
+  color: var(--burgundy-900);
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+/* Seal Opening Lift & Fade Animation */
+.envelope-card-wrapper.unfolding .wax-seal-container {
+  transform: translate(-50%, -70%) scale(1.08) rotate(4deg);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.75s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.5s ease;
+}
+
+/* --------------------------------------------------------------------------
+   4. SECTION 2: FIRST SCREEN AFTER OPENING (ROMANTIC GARDEN ARCH & SWANS)
+   -------------------------------------------------------------------------- */
+.first-screen-hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  height: 100svh;
+  min-height: 620px;
+  max-width: var(--max-content-width);
+  margin: 0 auto;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  transition: opacity 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+  box-shadow: 0 10px 40px rgba(50, 30, 20, 0.12);
+}
+
+@media screen and (min-width: 480px) {
+  .first-screen-hero {
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+    margin-top: 14px;
+    margin-bottom: 0;
+    border: 1px solid var(--gold-border);
+    border-bottom: none;
+    box-shadow: 
+      0 12px 35px rgba(50, 30, 20, 0.08),
+      -6px 0 20px rgba(50, 30, 20, 0.03),
+      6px 0 20px rgba(50, 30, 20, 0.03);
+  }
+}
+
+/* Bottom Parchment Transition Gradient on Hero Screen */
+.first-screen-bottom-blend {
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: clamp(85px, 14vh, 125px);
+  background: linear-gradient(
+    180deg,
+    rgba(253, 251, 248, 0) 0%,
+    rgba(253, 251, 248, 0.28) 28%,
+    rgba(250, 246, 240, 0.76) 65%,
+    #FDFBF8 100%
+  );
+  pointer-events: none;
+  z-index: 4;
+}
+
+/* Arch & Lake Background Visual (Clean Serene Lake) */
+.first-screen-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  z-index: 1;
+}
+
+/* --------------------------------------------------------------------------
+   1. REALISTIC FLOATING WATER ANIMATION
+   -------------------------------------------------------------------------- */
+.first-screen-water-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  overflow: hidden;
+}
+
+/* Photorealistic Lake Water Surface with SVG Displacement Ripple Distortion */
+.water-surface-displaced {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('assets/images/lake_water_surface.png');
+  background-size: cover;
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  filter: url(#lake-gentle-ripples);
+  will-change: filter, transform;
+  animation: waterSurfaceLiquidBreathe 14s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes waterSurfaceLiquidBreathe {
+  0% {
+    transform: translateY(0) scaleY(1);
+    opacity: 0.95;
+  }
+  50% {
+    transform: translateY(-0.8px) scaleY(1.002);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0.8px) scaleY(0.998);
+    opacity: 0.97;
+  }
+}
+
+/* Warm Sunset Golden Reflection Shimmer */
+.water-shimmer-highlight {
+  position: absolute;
+  left: 20%;
+  right: 20%;
+  top: 48%;
+  bottom: 16%;
+  background: radial-gradient(
+    ellipse 65% 42% at 50% 50%,
+    rgba(255, 238, 205, 0.28) 0%,
+    rgba(255, 222, 170, 0.16) 40%,
+    rgba(255, 215, 155, 0.06) 65%,
+    transparent 80%
+  );
+  mix-blend-mode: screen;
+  animation: waterShimmerBreathe 8s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes waterShimmerBreathe {
+  0% {
+    opacity: 0.65;
+    transform: scaleY(0.96) translateY(0);
+  }
+  50% {
+    opacity: 0.95;
+    transform: scaleY(1.03) translateY(-1px);
+  }
+  100% {
+    opacity: 0.72;
+    transform: scaleY(0.98) translateY(1px);
+  }
+}
+
+/* Gentle Horizontal Lake Ripples Mesh with SVG Displacement Map */
+.water-ripples-mesh {
+  position: absolute;
+  left: 20%;
+  right: 20%;
+  top: 48%;
+  bottom: 16%;
+  background: repeating-linear-gradient(
+    180deg,
+    transparent 0px,
+    rgba(255, 248, 230, 0.09) 4px,
+    transparent 9px,
+    rgba(165, 135, 100, 0.05) 15px,
+    transparent 22px
+  );
+  mix-blend-mode: overlay;
+  filter: url(#lake-gentle-ripples);
+  animation: waterRippleSlowDrift 14s ease-in-out infinite alternate;
+  pointer-events: none;
+  opacity: 0.75;
+}
+
+@keyframes waterRippleSlowDrift {
+  0% {
+    transform: translateY(0) scaleY(1);
+    opacity: 0.65;
+  }
+  50% {
+    transform: translateY(-2px) scaleY(1.02);
+    opacity: 0.85;
+  }
+  100% {
+    transform: translateY(2px) scaleY(0.98);
+    opacity: 0.7;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   2. SMOOTH FLOATING FLOWER & SIDE ARCH FOLIAGE ANIMATION (GENTLE BREEZE SWAY)
+   -------------------------------------------------------------------------- */
+.first-screen-flowers-breeze {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 4;
+}
+
+/* Shared full-viewport matching layer for side arch foliage & flowers */
+.breeze-side-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* Left Arch Column: Delicate spray with pink bud reaching over stone pillar */
+.breeze-left-spray {
+  background-image: url('assets/images/breeze_left_spray.png');
+  transform-origin: 18.2% 46.9%;
+  animation: breezeLeftSpraySway 6.4s ease-in-out infinite alternate;
+}
+
+@keyframes breezeLeftSpraySway {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(1.4deg);
+  }
+  100% {
+    transform: rotate(-1.1deg);
+  }
+}
+
+/* Left Arch Column: Upper English cabbage rose */
+.breeze-left-rose-upper {
+  background-image: url('assets/images/breeze_left_rose_upper.png');
+  transform-origin: 7.2% 42.5%;
+  animation: breezeLeftRoseUpper 7.8s ease-in-out infinite alternate -1.8s;
+}
+
+@keyframes breezeLeftRoseUpper {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(-0.9deg);
+  }
+  100% {
+    transform: rotate(1.0deg);
+  }
+}
+
+/* Left Arch Column: Mid English cabbage rose with foliage */
+.breeze-left-rose-mid {
+  background-image: url('assets/images/breeze_left_rose_mid.png');
+  transform-origin: 9.8% 49.8%;
+  animation: breezeLeftRoseMid 8.5s ease-in-out infinite alternate -3.5s;
+}
+
+@keyframes breezeLeftRoseMid {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(1.1deg);
+  }
+  100% {
+    transform: rotate(-0.8deg);
+  }
+}
+
+/* Right Arch Column: Trailing leafy vine swaying toward water */
+.breeze-right-tendril {
+  background-image: url('assets/images/breeze_right_tendril.png');
+  transform-origin: 77.5% 56.0%;
+  animation: breezeRightTendrilSway 5.8s ease-in-out infinite alternate -0.9s;
+}
+
+@keyframes breezeRightTendrilSway {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(1.6deg);
+  }
+  100% {
+    transform: rotate(-1.3deg);
+  }
+}
+
+/* Right Arch Column: Upper blush rose */
+.breeze-right-rose-upper {
+  background-image: url('assets/images/breeze_right_rose_upper.png');
+  transform-origin: 90.5% 31.3%;
+  animation: breezeRightRoseUpper 7.2s ease-in-out infinite alternate -2.2s;
+}
+
+@keyframes breezeRightRoseUpper {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(-1.0deg);
+  }
+  100% {
+    transform: rotate(1.1deg);
+  }
+}
+
+/* Right Arch Column: Mid blush rose in full bloom */
+.breeze-right-rose-mid {
+  background-image: url('assets/images/breeze_right_rose_mid.png');
+  transform-origin: 85.9% 55.2%;
+  animation: breezeRightRoseMid 8.1s ease-in-out infinite alternate -4.1s;
+}
+
+@keyframes breezeRightRoseMid {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(0.9deg);
+  }
+  100% {
+    transform: rotate(-1.1deg);
+  }
+}
+
+/* Right Arch Column: Tall snapdragon spire by the water edge */
+.breeze-right-spire {
+  background-image: url('assets/images/breeze_right_spire.png');
+  transform-origin: 84.6% 74.5%;
+  animation: breezeRightSpireSway 9.2s ease-in-out infinite alternate -1.4s;
+}
+
+@keyframes breezeRightSpireSway {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(-0.8deg);
+  }
+  100% {
+    transform: rotate(0.9deg);
+  }
+}
+
+/* Bottom Foreground Rose Blooms */
+.breeze-flower {
+  position: absolute;
+  background-size: contain;
+  background-repeat: no-repeat;
+  will-change: transform;
+}
+
+.flower-left-ranunculus {
+  bottom: 12.8%;
+  left: 27.5%;
+  width: clamp(38px, 10.5vw, 52px);
+  height: clamp(38px, 10.5vw, 52px);
+  background-image: url('assets/images/flower_bloom_left.png');
+  transform-origin: bottom left;
+  animation: flowerBreezeSway1 6.8s ease-in-out infinite alternate;
+  opacity: 0.85;
+}
+
+.flower-right-ranunculus {
+  bottom: 14.2%;
+  right: 10%;
+  width: clamp(38px, 10.5vw, 52px);
+  height: clamp(38px, 10.5vw, 52px);
+  background-image: url('assets/images/flower_bloom_right.png');
+  transform-origin: bottom right;
+  animation: flowerBreezeSway2 7.4s ease-in-out infinite alternate -2.6s;
+  opacity: 0.85;
+}
+
+@keyframes flowerBreezeSway1 {
+  0% {
+    transform: rotate(0deg) translate(0, 0);
+  }
+  50% {
+    transform: rotate(1.3deg) translate(0.5px, -1px);
+  }
+  100% {
+    transform: rotate(-0.8deg) translate(-0.4px, 0.4px);
+  }
+}
+
+@keyframes flowerBreezeSway2 {
+  0% {
+    transform: rotate(0deg) translate(0, 0);
+  }
+  50% {
+    transform: rotate(-1.4deg) translate(-0.6px, -0.8px);
+  }
+  100% {
+    transform: rotate(0.9deg) translate(0.4px, 0.5px);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   3. TWO REALISTIC MUTE SWANS ENTERING FROM OPPOSITE SIDES
+   -------------------------------------------------------------------------- */
+.first-screen-swans-stage {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 18.6%;
+  height: clamp(110px, 16.5vh, 160px);
+  pointer-events: none;
+  z-index: 3;
+  overflow: visible;
+}
+
+.swan-container {
+  position: absolute;
+  bottom: 0;
+  height: 100%;
+  width: clamp(105px, 26.5vw, 155px);
+  will-change: transform, opacity;
+}
+
+/* Initial state: lake starts with no swans visible (both placed outside the visible lake opening) */
+.swan-left-container {
+  right: calc(50% - 2px);
+  transform: translateX(calc(-50vw - 120px));
+  opacity: 0;
+}
+
+.swan-right-container {
+  left: calc(50% - 2px);
+  transform: translateX(calc(50vw + 120px));
+  opacity: 0;
+}
+
+.swan-body-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+}
+
+.swan-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 2px 8px rgba(70, 50, 30, 0.12));
+}
+
+/* Subtle ripples & light sheen playing across the swan water reflections */
+.swan-reflection-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 52%;
+  background: repeating-linear-gradient(
+    180deg,
+    transparent 0px,
+    rgba(255, 248, 230, 0.08) 3px,
+    transparent 7px,
+    rgba(165, 135, 100, 0.05) 12px,
+    transparent 18px
+  );
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  animation: waterRippleSlowDrift 12s ease-in-out infinite alternate;
+  opacity: 0.8;
+}
+
+/* Animated Symmetrical Glide from Opposite Sides */
+.swans-glide-active .swan-left-container {
+  animation: swanGlideInLeft 4.6s cubic-bezier(0.16, 0.92, 0.28, 1) forwards;
+}
+
+.swans-glide-active .swan-right-container {
+  animation: swanGlideInRight 4.6s cubic-bezier(0.16, 0.92, 0.28, 1) forwards;
+}
+
+@keyframes swanGlideInLeft {
+  0% {
+    transform: translateX(calc(-50vw - 120px));
+    opacity: 0;
+  }
+  18% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes swanGlideInRight {
+  0% {
+    transform: translateX(calc(50vw + 120px));
+    opacity: 0;
+  }
+  18% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Subtle Natural Swimming Movement & Synchronized Floating Idle */
+.swans-glide-active .swan-left-container .swan-body-inner {
+  animation: 
+    swanSwimDip 4.6s ease-in-out,
+    swanCalmIdle 5.2s ease-in-out 4.6s infinite alternate;
+}
+
+.swans-glide-active .swan-right-container .swan-body-inner {
+  animation: 
+    swanSwimDip 4.6s ease-in-out,
+    swanCalmIdle 5.2s ease-in-out 4.6s infinite alternate;
+}
+
+@keyframes swanSwimDip {
+  0% { transform: translateY(0); }
+  25% { transform: translateY(-1.4px); }
+  50% { transform: translateY(1.0px); }
+  75% { transform: translateY(-0.8px); }
+  100% { transform: translateY(0); }
+}
+
+@keyframes swanCalmIdle {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-1.4px);
+  }
+}
+
+/* Water Wake Ripples Radiating Beneath Each Swan */
+.swan-water-wake {
+  position: absolute;
+  bottom: 34%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 85%;
+  height: 16px;
+  pointer-events: none;
+}
+
+.swan-wake-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 245, 220, 0.38);
+  box-shadow: 0 0 5px rgba(255, 240, 200, 0.2);
+  transform: scale(0.25, 0.15);
+  opacity: 0;
+}
+
+.swans-glide-active .ring-1 {
+  animation: wakeRippleSpread 3.8s cubic-bezier(0.1, 0.5, 0.6, 1) infinite;
+}
+
+.swans-glide-active .ring-2 {
+  animation: wakeRippleSpread 3.8s cubic-bezier(0.1, 0.5, 0.6, 1) 1.25s infinite;
+}
+
+.swans-glide-active .ring-3 {
+  animation: wakeRippleSpread 3.8s cubic-bezier(0.1, 0.5, 0.6, 1) 2.5s infinite;
+}
+
+@keyframes wakeRippleSpread {
+  0% {
+    transform: scale(0.25, 0.15);
+    opacity: 0.65;
+  }
+  50% {
+    opacity: 0.35;
+  }
+  100% {
+    transform: scale(1.35, 0.45);
+    opacity: 0;
+  }
+}
+
+/* Delicate Gradient Overlay for Content Readability */
+.first-screen-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg, 
+    rgba(250, 241, 236, 0.42) 0%, 
+    rgba(250, 241, 236, 0.1) 28%, 
+    transparent 55%, 
+    rgba(74, 14, 28, 0.14) 100%
+  );
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Falling Rose Petals Canvas */
+.petals-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* First Screen Content Wrapper */
+.first-screen-content {
+  position: relative;
+  z-index: 4;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: clamp(38px, 7.5vh, 60px) 20px clamp(24px, 5vh, 40px);
+  text-align: center;
+}
+
+/* Top Header: Wedding Day & Date */
+.first-screen-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.first-screen-script {
+  font-family: var(--font-script);
+  font-size: clamp(2.3rem, 7.5vw, 3rem);
+  color: var(--burgundy-800);
+  line-height: 1.1;
+  margin-bottom: 2px;
+  text-shadow: 
+    0 1px 3px rgba(255, 255, 255, 0.95), 
+    0 2px 10px rgba(197, 168, 128, 0.35);
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1), transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.first-screen-date {
+  font-family: var(--font-serif-display);
+  font-size: clamp(0.95rem, 3.2vw, 1.15rem);
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--burgundy-900);
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.9);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1), letter-spacing 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform, letter-spacing;
+}
+
+/* Center Vista: Prominently Centered in Archway */
+.first-screen-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: -12px;
+}
+
+.first-screen-couple {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.first-screen-name {
+  font-family: var(--font-script);
+  font-size: clamp(3.4rem, 11.5vw, 4.6rem);
+  font-weight: 400;
+  color: var(--burgundy-900);
+  line-height: 1.05;
+  text-shadow: 
+    0 1px 3px rgba(255, 255, 255, 0.95), 
+    0 3px 14px rgba(197, 168, 128, 0.45);
+  opacity: 0;
+  transform: translateY(16px) scale(0.97);
+  transition: opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1), transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.first-screen-ampersand {
+  font-family: var(--font-serif-display);
+  font-style: italic;
+  font-size: clamp(1.4rem, 4.5vw, 1.8rem);
+  color: var(--gold-dark);
+  margin: 1px 0;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.9);
+  display: block;
+  opacity: 0;
+  transform: translateY(10px) scale(0.92);
+  transition: opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1), transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+/* Sequenced Hero Reveals triggered when #first-screen-hero has .hero-revealed */
+.first-screen-hero.hero-revealed .first-screen-script {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.15s;
+}
+
+.first-screen-hero.hero-revealed .first-screen-date {
+  opacity: 1;
+  transform: translateY(0);
+  letter-spacing: 0.18em;
+  transition-delay: 0.32s;
+}
+
+.first-screen-hero.hero-revealed .hero-name-groom {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  transition-delay: 0.52s;
+}
+
+.first-screen-hero.hero-revealed .first-screen-ampersand {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  transition-delay: 0.72s;
+}
+
+.first-screen-hero.hero-revealed .hero-name-bride {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  transition-delay: 0.90s;
+}
+
+.first-screen-hero.hero-revealed .first-screen-scroll {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+  transition-delay: 1.20s;
+}
+
+/* --------------------------------------------------------------------------
+   4. CORRECT SCROLL-DOWN BUTTON POSITION
+   Precisely Centered horizontally between swans in clear space without overlapping
+   -------------------------------------------------------------------------- */
+.first-screen-scroll {
+  position: absolute;
+  left: 50%;
+  top: 57.5%;
+  transform: translateX(-50%) translateY(12px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  cursor: pointer;
+  outline: none;
+  touch-action: manipulation;
+  z-index: 5;
+  opacity: 0;
+  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.first-screen-scroll:hover {
+  transform: translateX(-50%) translateY(2px);
+}
+
+.first-screen-scroll-label {
+  font-family: var(--font-serif-body);
+  font-style: italic;
+  font-size: clamp(0.95rem, 3.2vw, 1.15rem);
+  color: var(--burgundy-900);
+  text-shadow: 0 1px 3px rgba(255, 255, 255, 0.95), 0 0 10px rgba(255, 245, 230, 0.85);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.first-screen-scroll-chevron {
+  width: clamp(14px, 3.6vw, 17px);
+  height: clamp(8px, 2.2vw, 10px);
+  color: var(--burgundy-800);
+  animation: bounceChevron 2.2s ease-in-out infinite;
+  filter: drop-shadow(0 1px 2px rgba(255, 255, 255, 0.9));
+  display: block;
+}
+
+/* Lower spacer keeping the swans clean and unobstructed */
+.first-screen-swans-area {
+  height: 22%;
+  width: 100%;
+  pointer-events: none;
+}
+
+@keyframes bounceChevron {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(3px);
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .swans-glide-active .swan-left-container,
+  .swans-glide-active .swan-right-container,
+  .swan-left-container,
+  .swan-right-container {
+    animation: none !important;
+    transform: translateX(0) !important;
+    opacity: 1 !important;
+  }
+  .breeze-flower {
+    animation: none !important;
+  }
+  .water-ripples-mesh {
+    animation: none !important;
+  }
+  .water-shimmer-highlight {
+    animation: none !important;
+  }
+  .swan-wake-ring {
+    animation: none !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   4. SECTION 2: THE MAIN INVITATION STATIONERY (REVEALED CARD)
+   -------------------------------------------------------------------------- */
+.invitation-container {
+  width: 100%;
+  max-width: var(--max-content-width);
+  margin: 0 auto;
+  padding: 0 0 100px;
+  transition: opacity 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+  position: relative;
+}
+
+/* Flanking Side Transition Floral Flourishes Bridging Hero & Invitation */
+.transition-floral-flank {
+  position: absolute;
+  width: clamp(118px, 27vw, 150px);
+  pointer-events: none;
+  z-index: 10;
+  opacity: 0.88;
+  mix-blend-mode: multiply;
+  filter: drop-shadow(0 2px 8px rgba(197, 168, 128, 0.2));
+}
+
+.flank-left {
+  top: -42px;
+  left: -20px;
+  transform: rotate(-8deg);
+}
+
+.flank-right {
+  top: -42px;
+  right: -20px;
+  transform: scaleX(-1) rotate(-8deg);
+}
+
+.transition-floral-flank img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Main Stationery Sheet (Paper Board - Seamless Continuation) */
+.stationery-sheet {
+  background-color: var(--bg-paper-cream);
+  background-image: 
+    linear-gradient(180deg, #FDFBF8 0%, #FAF6F0 25%, #F8F3EB 60%, #FAF6F0 100%);
+  border: 1px solid var(--gold-border);
+  border-top: none;
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  box-shadow: 
+    0 20px 45px rgba(50, 30, 20, 0.08),
+    -6px 0 20px rgba(50, 30, 20, 0.03),
+    6px 0 20px rgba(50, 30, 20, 0.03),
+    inset 4px 0 0 rgba(253, 251, 248, 0.8),
+    inset -4px 0 0 rgba(253, 251, 248, 0.8),
+    inset 0 -4px 0 rgba(253, 251, 248, 0.8),
+    inset 5px 0 0 rgba(197, 168, 128, 0.35),
+    inset -5px 0 0 rgba(197, 168, 128, 0.35),
+    inset 0 -5px 0 rgba(197, 168, 128, 0.35);
+  padding: clamp(34px, 5.5vh, 50px) 24px 48px;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+
+/* Mobile Screen Edge-to-Edge Fluidity */
+@media screen and (max-width: 479px) {
+  .first-screen-hero {
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+  .stationery-sheet {
+    border-left: none !important;
+    border-right: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+  .flank-left {
+    left: -15px;
+    top: -36px;
+  }
+  .flank-right {
+    right: -15px;
+    top: -36px;
+  }
+}
+
+/* Sacred Shloka Invocation */
+.section-invocation {
+  margin-bottom: 24px;
+  position: relative;
+  z-index: 2;
+}
+
+.traditional-shloka {
+  font-family: var(--font-serif-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--burgundy-800);
+  letter-spacing: 0.08em;
+  margin-bottom: 4px;
+}
+
+.traditional-shloka-sub {
+  font-family: var(--font-serif-body);
+  font-size: 0.95rem;
+  font-style: italic;
+  color: var(--gold-dark);
+  letter-spacing: 0.04em;
+}
+
+.ornamental-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 12px auto 0;
+  width: 140px;
+  position: relative;
+}
+
+.ornamental-line::before,
+.ornamental-line::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold-antique));
+}
+
+.ornamental-line::after {
+  background: linear-gradient(to left, transparent, var(--gold-antique));
+}
+
+.ornament-diamond {
+  font-size: 0.65rem;
+  color: var(--gold-dark);
+  padding: 0 8px;
+}
+
+/* Invitation Lead */
+.section-hosts-intro {
+  margin-bottom: 32px;
+  position: relative;
+  z-index: 2;
+}
+
+.invite-prelude {
+  font-family: var(--font-script);
+  font-size: 2.1rem;
+  color: var(--burgundy-800);
+  line-height: 1.1;
+  margin-bottom: 8px;
+}
+
+.invite-lead {
+  font-size: 1.05rem;
+  color: var(--text-muted);
+  max-width: 380px;
+  margin: 0 auto;
+  line-height: 1.5;
+}
+
+/* Couple Presentation */
+.section-couple {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 28px;
+  position: relative;
+  z-index: 2;
+}
+
+.couple-card {
+  padding: 16px 12px;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.45);
+  border: 1px solid rgba(197, 168, 128, 0.25);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.couple-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(197, 168, 128, 0.15);
+}
+
+.person-title {
+  font-family: var(--font-serif-display);
+  font-size: 1.95rem;
+  font-weight: 700;
+  color: var(--burgundy-900);
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+}
+
+.person-degree {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  color: var(--gold-dark);
+  text-transform: uppercase;
+  margin-top: 2px;
+  margin-bottom: 10px;
+}
+
+.parent-lineage {
+  margin-top: 6px;
+}
+
+.parent-label {
+  font-family: var(--font-serif-body);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--text-light);
+  display: block;
+  margin-bottom: 2px;
+}
+
+.parent-names {
+  font-size: 1.12rem;
+  font-weight: 600;
+  color: var(--text-main);
+  line-height: 1.35;
+}
+
+.bride-origin {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-top: 6px;
+  font-style: italic;
+}
+
+/* Connector Ampersand */
+.couple-connector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin: 4px 0;
+}
+
+.connector-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold-antique), transparent);
+}
+
+.connector-ampersand {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--gold-antique);
+  background: var(--bg-paper-cream);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.ampersand-char {
+  font-family: var(--font-script);
+  font-size: 2.2rem;
+  color: var(--burgundy-800);
+  line-height: 1;
+  transform: translateY(-2px);
+}
+
+/* Warm Message */
+.section-message {
+  margin: 10px auto 28px;
+  max-width: 380px;
+  z-index: 2;
+  position: relative;
+}
+
+.warm-message {
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* Deckle Edge Dividers */
+.deckle-divider {
+  width: calc(100% + 48px);
+  margin: 28px -24px;
+  line-height: 0;
+  overflow: hidden;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.04));
+  pointer-events: none;
+}
+
+.deckle-divider img {
+  width: 100%;
+  height: 24px;
+  display: block;
+}
+
+.deckle-divider.flip-horizontal {
+  transform: scaleX(-1);
+}
+
+/* --------------------------------------------------------------------------
+   5. SECTION 3: LIVE WEDDING COUNTDOWN TIMER (MATCHING REFERENCE IMAGE 1)
+   -------------------------------------------------------------------------- */
+.section-countdown {
+  margin: 20px 0 28px;
+  position: relative;
+  z-index: 2;
+}
+
+.script-heading {
+  font-family: var(--font-script);
+  font-size: 2.4rem;
+  color: var(--burgundy-800);
+  line-height: 1.15;
+  margin-bottom: 16px;
+  font-weight: 400;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8);
+}
+
+.countdown-grid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 16px auto 12px;
+}
+
+.countdown-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 62px;
+}
+
+.countdown-number {
+  font-family: var(--font-serif-display);
+  font-size: 2.4rem;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--gold-dark);
+  background: linear-gradient(135deg, #B89558 0%, #D8BE8E 50%, #9E7D47 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.countdown-label {
+  font-family: var(--font-serif-body);
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+  text-transform: capitalize;
+}
+
+.countdown-separator {
+  font-family: var(--font-serif-display);
+  font-size: 2.2rem;
+  color: var(--gold-antique);
+  line-height: 1;
+  transform: translateY(-8px);
+  opacity: 0.75;
+}
+
+.countdown-event-date {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  color: var(--burgundy-900);
+  text-transform: uppercase;
+  margin-top: 10px;
+}
+
+/* --------------------------------------------------------------------------
+   6. SECTION 4: SCHEDULE OF EVENTS TIMELINE (MATCHING REFERENCE IMAGE 1)
+   -------------------------------------------------------------------------- */
+.section-timeline {
+  margin: 20px 0 36px;
+  position: relative;
+  z-index: 2;
+}
+
+.timeline-header-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.heading-flourish {
+  width: 44px;
+  height: 18px;
+  opacity: 0.85;
+}
+
+.flourish-right {
+  transform: scaleX(-1);
+}
+
+.timeline-subheading {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-light);
+  margin-top: 2px;
+  margin-bottom: 28px;
+}
+
+/* Timeline Layout Matching Reference */
+.timeline-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+/* Center Guide Spine */
+.timeline-central-spine {
+  position: absolute;
+  top: 18px;
+  bottom: 14px;
+  left: 36%;
+  width: 1px;
+  background: linear-gradient(180deg, transparent, #C5A880 12%, #C5A880 88%, transparent);
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+/* Per-Date Subheadings (Matching Reference Image) */
+.timeline-date-block {
+  width: 100%;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+  margin: 2px 0 -6px;
+}
+
+.timeline-date-heading {
+  font-family: var(--font-sans);
+  font-size: clamp(0.72rem, 2.4vw, 0.78rem);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-light);
+  line-height: 1.4;
+  margin: 0;
+}
+
+.timeline-date-heading span {
+  display: inline-block;
+  background: var(--bg-paper-cream);
+  padding: 3px 14px;
+  position: relative;
+  z-index: 2;
+}
+
+/* Subtle Rose Floral Accent on Spine (Matching Reference Image) */
+.timeline-date-rose {
+  position: relative;
+  width: 100%;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  margin: -6px 0;
+  z-index: 3;
+}
+
+.timeline-date-rose-anchor {
+  position: absolute;
+  left: 36%;
+  transform: translateX(-50%);
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.timeline-date-rose-aura {
+  position: absolute;
+  inset: -10px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(235, 175, 185, 0.42) 0%, rgba(245, 205, 212, 0.18) 50%, transparent 75%);
+  filter: blur(4px);
+  pointer-events: none;
+}
+
+.timeline-date-rose-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 3px 8px rgba(185, 115, 125, 0.35));
+  mix-blend-mode: multiply;
+  display: block;
+}
+
+.timeline-event-row {
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
+/* Time Column on Left */
+.timeline-time-col {
+  width: 36%;
+  text-align: right;
+  padding-right: 18px;
+  display: flex;
+  flex-direction: column;
+}
+
+.timeline-time {
+  font-family: var(--font-serif-display);
+  font-size: 1.45rem;
+  font-weight: 600;
+  color: var(--burgundy-900);
+  line-height: 1.1;
+}
+
+.timeline-time-suffix {
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold-dark);
+}
+
+/* Center Node Column */
+.timeline-node-col {
+  width: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transform: translateX(-50%);
+}
+
+.node-diamond {
+  width: 9px;
+  height: 9px;
+  background: var(--gold-dark);
+  transform: rotate(45deg);
+  border: 2px solid var(--bg-paper-cream);
+  box-shadow: 0 0 0 1px var(--gold-antique);
+}
+
+/* --------------------------------------------------------------------------
+   Interactive Scroll-Driven Flower Disintegration & Reassembly Milestones
+   -------------------------------------------------------------------------- */
+.timeline-flower-milestone {
+  position: relative;
+  width: 100%;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  margin: -6px 0;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.timeline-flower-spine-anchor {
+  position: absolute;
+  left: 36%;
+  transform: translateX(-50%);
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+/* Warm, romantic rosy aura behind the cabbage rose */
+.timeline-flower-aura {
+  position: absolute;
+  inset: -12px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(235, 175, 185, 0.42) 0%, rgba(245, 205, 212, 0.18) 50%, transparent 75%);
+  pointer-events: none;
+  filter: blur(5px);
+  will-change: opacity, transform;
+}
+
+/* The fully intact cabbage rose milestone */
+.timeline-flower-intact {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform, opacity;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.timeline-flower-intact .rose-bloom-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 10px rgba(185, 115, 125, 0.38));
+  mix-blend-mode: multiply;
+  display: block;
+}
+
+/* Petals Stage: hosts the individual falling petals */
+.timeline-petals-stage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  z-index: 6;
+}
+
+.timeline-petal-item {
+  position: absolute;
+  top: 0;
+  left: 0;
+  will-change: transform, opacity;
+  pointer-events: none;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  filter: drop-shadow(0 3px 6px rgba(180, 110, 120, 0.28));
+  mix-blend-mode: multiply;
+  opacity: 0;
+  transform-origin: center center;
+}
+
+/* Legacy Rose Node Badge Fallback (if referenced) */
+.rose-node-badge {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rose-bloom-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 8px rgba(217, 154, 156, 0.4));
+  mix-blend-mode: multiply;
+}
+
+/* Description Column on Right */
+.timeline-desc-col {
+  flex: 1;
+  text-align: left;
+  padding-left: 14px;
+}
+
+.event-name {
+  font-family: var(--font-serif-display);
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--text-main);
+  line-height: 1.2;
+}
+
+.event-description {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+  margin-top: 3px;
+}
+
+.event-tag {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--burgundy-800);
+  background: rgba(217, 154, 156, 0.2);
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 4px;
+}
+
+.highlight-event .event-name {
+  color: var(--burgundy-900);
+}
+
+/* --------------------------------------------------------------------------
+   7. SECTION 5: VENUE & ACTIONS
+   -------------------------------------------------------------------------- */
+.section-venue {
+  margin: 10px 0 32px;
+  position: relative;
+  z-index: 2;
+}
+
+.section-card-frame {
+  padding: 26px 20px;
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid var(--gold-border);
+  border-radius: var(--radius-md);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+}
+
+.venue-icon-wrapper {
+  margin-bottom: 6px;
+}
+
+.venue-symbol {
+  font-size: 1.8rem;
+  color: var(--burgundy-800);
+}
+
+.venue-name {
+  font-family: var(--font-serif-display);
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--burgundy-900);
+  margin-bottom: 6px;
+}
+
+.venue-address {
+  font-style: normal;
+  font-size: 1.05rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.venue-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+/* Luxury Buttons */
+.btn-luxury {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: linear-gradient(135deg, var(--burgundy-800) 0%, var(--burgundy-900) 100%);
+  color: #FFFFFF;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: none;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 4px 14px rgba(74, 14, 28, 0.28);
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+
+.btn-luxury:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(74, 14, 28, 0.4);
+}
+
+.btn-luxury:active {
+  transform: translateY(1px);
+}
+
+.btn-luxury-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 24px;
+  background: transparent;
+  color: var(--burgundy-800);
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: 1px solid var(--burgundy-700);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.btn-luxury-outline:hover {
+  background: rgba(94, 18, 36, 0.05);
+  border-color: var(--burgundy-900);
+}
+
+.btn-icon {
+  width: 16px;
+  height: 16px;
+}
+
+/* --------------------------------------------------------------------------
+   8. SECTION 6: GUEST GUIDELINES (MATCHING REFERENCE IMAGE 3)
+   -------------------------------------------------------------------------- */
+.section-guidelines {
+  margin: 10px 0 24px;
+  position: relative;
+  z-index: 2;
+}
+
+.guideline-card {
+  padding: 26px 20px 24px;
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.48);
+  border: 1px dashed var(--gold-border);
+  box-shadow: 0 6px 22px rgba(197, 168, 128, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0;
+}
+
+.dress-code-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.script-heading-small {
+  font-family: var(--font-script);
+  font-size: clamp(2rem, 6.5vw, 2.3rem);
+  color: var(--burgundy-800);
+  line-height: 1.15;
+  margin-bottom: 6px;
+}
+
+.guideline-text {
+  font-family: var(--font-serif-body);
+  font-size: clamp(1rem, 3.2vw, 1.08rem);
+  color: var(--text-lead);
+  line-height: 1.55;
+  max-width: 360px;
+  margin: 0 auto;
+}
+
+/* Thin Delicate Gold Ornamental Divider with Centered Diamond Motif */
+.attire-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 140px;
+  margin: 18px auto 16px;
+  position: relative;
+}
+
+.attire-divider::before,
+.attire-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold-antique));
+  opacity: 0.7;
+}
+
+.attire-divider::after {
+  background: linear-gradient(to left, transparent, var(--gold-antique));
+}
+
+.attire-divider-diamond {
+  font-size: 0.6rem;
+  color: var(--gold-dark);
+  padding: 0 8px;
+  line-height: 1;
+}
+
+/* Premium Wedding Attire Editorial Quote Block */
+.attire-quote-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 380px;
+  margin: 0 auto;
+}
+
+.attire-quote {
+  font-family: var(--font-serif-display);
+  font-size: clamp(1.05rem, 3.4vw, 1.16rem);
+  font-weight: 600;
+  font-style: italic;
+  color: var(--burgundy-900);
+  line-height: 1.45;
+  letter-spacing: 0.015em;
+  margin: 0 0 8px;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8);
+}
+
+.attire-quote-support {
+  font-family: var(--font-serif-body);
+  font-size: clamp(0.92rem, 2.9vw, 1rem);
+  color: var(--text-muted);
+  line-height: 1.55;
+  margin: 0 0 12px;
+  max-width: 350px;
+}
+
+/* Tiny Tasteful Floral Flourish Accent */
+.attire-flourish {
+  line-height: 0;
+  opacity: 0.65;
+  display: flex;
+  justify-content: center;
+}
+
+.attire-flourish-img {
+  width: clamp(60px, 16vw, 76px);
+  height: auto;
+  filter: drop-shadow(0 1px 2px rgba(197, 168, 128, 0.25));
+}
+
+/* --------------------------------------------------------------------------
+   9. SECTION 7: INTERACTIVE RSVP GATEWAY (MATCHING REFERENCE IMAGE 2)
+   -------------------------------------------------------------------------- */
+.section-rsvp-gateway {
+  margin: 20px 0 36px;
+  position: relative;
+  z-index: 2;
+}
+
+.rsvp-subtext {
+  font-size: 1.05rem;
+  color: var(--text-muted);
+  max-width: 360px;
+  margin: 0 auto 20px;
+  line-height: 1.5;
+}
+
+.rsvp-seal-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.wax-seal-rsvp-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+  touch-action: manipulation;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  filter: drop-shadow(0 10px 24px rgba(74, 14, 28, 0.35)) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.12));
+}
+
+.rsvp-seal-glow {
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(197, 168, 128, 0.35) 0%, transparent 70%);
+  animation: glowBreathe 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.rsvp-seal-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 50%;
+  display: block;
+}
+
+.wax-seal-rsvp-btn:hover {
+  transform: scale(1.08);
+  filter: drop-shadow(0 14px 30px rgba(74, 14, 28, 0.45));
+}
+
+.wax-seal-rsvp-btn:active {
+  transform: scale(0.93);
+}
+
+.rsvp-seal-caption {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  animation: bounceHint 2.4s ease-in-out infinite;
+}
+
+.chevron-up {
+  font-size: 1rem;
+  color: var(--burgundy-800);
+  line-height: 1;
+}
+
+.script-caption {
+  font-family: var(--font-script);
+  font-size: 1.45rem;
+  color: var(--burgundy-900);
+}
+
+/* --------------------------------------------------------------------------
+   10. SECTION 8: INVITATION HOSTS & TRADITIONAL CLOSING
+   -------------------------------------------------------------------------- */
+.section-hosts-closing {
+  margin-top: 36px;
+  position: relative;
+  z-index: 2;
+}
+
+.hosts-card {
+  padding: 24px 20px;
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid var(--gold-border);
+  margin-bottom: 28px;
+}
+
+.hosts-label {
+  font-family: var(--font-serif-body);
+  font-style: italic;
+  font-size: clamp(0.92rem, 2.8vw, 1rem);
+  color: var(--text-light);
+  display: block;
+  margin-bottom: 8px;
+}
+
+.hosts-names {
+  font-family: var(--font-serif-display);
+  font-size: clamp(1.18rem, 4vw, 1.35rem);
+  font-weight: 600;
+  color: var(--burgundy-900);
+  line-height: 1.25;
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+
+.hosts-and-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 140px;
+  margin: 4px auto;
+}
+
+.hosts-and-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold-antique));
+  opacity: 0.65;
+}
+
+.hosts-and-divider .hosts-and-line:last-child {
+  background: linear-gradient(to left, transparent, var(--gold-antique));
+}
+
+.hosts-and {
+  font-family: var(--font-script);
+  font-size: clamp(1.4rem, 4.5vw, 1.65rem);
+  color: var(--gold-dark);
+  line-height: 1;
+  margin: 0;
+}
+
+.hosts-family {
+  font-size: clamp(0.88rem, 2.7vw, 0.95rem);
+  color: var(--text-muted);
+  margin-top: 8px;
+  font-style: italic;
+}
+
+.closing-signoff {
+  margin-bottom: 24px;
+}
+
+.signoff-script {
+  font-family: var(--font-script);
+  font-size: 2.3rem;
+  color: var(--burgundy-800);
+  line-height: 1.1;
+  margin-bottom: 4px;
+}
+
+.signoff-names {
+  font-family: var(--font-serif-display);
+  font-size: 1.6rem;
+  color: var(--text-main);
+  letter-spacing: 0.05em;
+}
+
+.footer-botanical {
+  width: 180px;
+  margin: 16px auto 0;
+  opacity: 0.88;
+  mix-blend-mode: multiply;
+}
+
+.footer-rose-img {
+  width: 100%;
+  height: auto;
+}
+
+/* --------------------------------------------------------------------------
+   11. RSVP MODAL / SLIDE-UP DRAWER
+   -------------------------------------------------------------------------- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(44, 20, 26, 0.65);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 2000;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-sheet {
+  width: 100%;
+  max-width: var(--max-content-width);
+  background: var(--bg-paper-cream);
+  background-image: 
+    radial-gradient(circle at 50% 0%, #FFFFFF 0%, #FAF5EE 100%);
+  border-top-left-radius: var(--radius-lg);
+  border-top-right-radius: var(--radius-lg);
+  box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.25);
+  border: 1px solid var(--gold-border);
+  border-bottom: none;
+  padding: 32px 24px 36px;
+  position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
+  transform: translateY(100%);
+  transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.modal-overlay.active .modal-sheet {
+  transform: translateY(0);
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 16px;
+  right: 18px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--gold-border);
+  background: rgba(255, 255, 255, 0.8);
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.modal-close-btn:hover {
+  background: var(--burgundy-800);
+  color: #FFFFFF;
+}
+
+.modal-header {
+  text-align: center;
+  margin-bottom: 22px;
+}
+
+.mini-seal {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 6px;
+  border-radius: 50%;
+  filter: drop-shadow(0 4px 8px rgba(74, 14, 28, 0.3));
+}
+
+.mini-seal img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.modal-subtitle {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+/* RSVP Form Elements */
+.rsvp-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  gap: 5px;
+}
+
+.form-row {
+  display: flex;
+  gap: 12px;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.form-group label {
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--text-main);
+  text-transform: uppercase;
+}
+
+.form-group .required {
+  color: var(--burgundy-700);
+}
+
+.form-group input[type="text"],
+.form-group select,
+.form-group textarea {
+  font-family: var(--font-serif-body);
+  font-size: 1.05rem;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--gold-antique);
+  background: #FFFFFF;
+  color: var(--text-main);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-group input[type="text"]:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: var(--burgundy-800);
+  box-shadow: 0 0 0 3px rgba(126, 27, 50, 0.12);
+  outline: none;
+}
+
+.error-msg {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  color: #C22020;
+  display: none;
+}
+
+.form-group.has-error input {
+  border-color: #C22020;
+}
+
+.form-group.has-error .error-msg {
+  display: block;
+}
+
+/* Radio Cards */
+.radio-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.radio-card {
+  position: relative;
+  cursor: pointer;
+}
+
+.radio-card input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.radio-box {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--gold-border);
+  background: rgba(255, 255, 255, 0.7);
+  transition: all 0.2s ease;
+  height: 100%;
+}
+
+.radio-card input:checked + .radio-box {
+  background: #FFF9F5;
+  border-color: var(--burgundy-800);
+  box-shadow: 0 0 0 1px var(--burgundy-800);
+}
+
+.radio-title {
+  font-family: var(--font-serif-display);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--burgundy-900);
+  line-height: 1.2;
+}
+
+.radio-desc {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+  line-height: 1.2;
+}
+
+.btn-submit-rsvp {
+  margin-top: 8px;
+  width: 100%;
+  padding: 14px;
+  font-size: 0.9rem;
+}
+
+.rsvp-storage-note {
+  text-align: center;
+  color: var(--text-light);
+  line-height: 1.4;
+  margin-top: 4px;
+}
+
+/* Success View */
+.rsvp-success-view {
+  text-align: center;
+  padding: 10px 0;
+}
+
+.success-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--burgundy-800);
+  color: #FFFFFF;
+  font-size: 1.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 14px;
+}
+
+.success-msg {
+  font-size: 1.1rem;
+  color: var(--text-main);
+  margin-bottom: 12px;
+}
+
+.success-details {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.7);
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--gold-border);
+  margin-bottom: 20px;
+}
+
+.btn-whatsapp {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 12px 20px;
+  background: #25D366;
+  color: #FFFFFF;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+  margin-bottom: 12px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-whatsapp:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(37, 211, 102, 0.4);
+}
+
+/* --------------------------------------------------------------------------
+   12. PERSISTENT AMBIENT MUSIC CONTROLLER (MATCHING REFERENCE BOTTOM RIGHT)
+   -------------------------------------------------------------------------- */
+.floating-music-bar {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 999;
+}
+
+.btn-music-toggle {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 1.5px solid var(--gold-light);
+  background: linear-gradient(135deg, var(--burgundy-700) 0%, var(--burgundy-900) 100%);
+  color: #FFFFFF;
+  box-shadow: 0 8px 24px rgba(74, 14, 28, 0.4);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  touch-action: manipulation;
+  outline: none;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.btn-music-toggle:hover {
+  transform: scale(1.08);
+  box-shadow: 0 10px 28px rgba(74, 14, 28, 0.55);
+}
+
+.btn-music-toggle:active {
+  transform: scale(0.94);
+}
+
+.music-icon {
+  font-size: 0.95rem;
+  color: #FAF5EE;
+  line-height: 1;
+}
+
+.music-icon.icon-play {
+  transform: translateX(1px);
+}
+
+.music-pulse-ring {
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 1px solid var(--gold-antique);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.floating-music-bar.playing .music-pulse-ring {
+  animation: musicRing 2.4s ease-out infinite;
+}
+
+/* Toast Notification */
+.toast-notification {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--burgundy-900);
+  color: #FFFFFF;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  padding: 10px 20px;
+  border-radius: var(--radius-full);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  z-index: 3000;
+  opacity: 0;
+  transition: transform 0.35s ease, opacity 0.35s ease;
+  pointer-events: none;
+}
+
+.toast-notification.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+/* --------------------------------------------------------------------------
+   13. Scroll Reveal Animations & Premium Motion System
+   -------------------------------------------------------------------------- */
+.scroll-fade {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1), transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.scroll-fade.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Section Headings inside scroll-fade containers */
+.scroll-fade .script-heading,
+.scroll-fade .timeline-header-wrap {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.08s, transform 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.08s;
+  will-change: opacity, transform;
+}
+
+.scroll-fade.is-revealed .script-heading,
+.scroll-fade.is-revealed .timeline-header-wrap {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.scroll-fade .heading-flourish {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.18s, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.18s;
+}
+
+.scroll-fade.is-revealed .heading-flourish {
+  opacity: 0.85;
+  transform: scale(1);
+}
+
+/* Couple Cards Staggered Reveal */
+.section-couple .couple-card {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1), transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.section-couple .couple-connector {
+  opacity: 0;
+  transform: scale(0.92);
+  transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1), transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.section-couple.is-revealed .groom-card {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.12s;
+}
+
+.section-couple.is-revealed .couple-connector {
+  opacity: 1;
+  transform: scale(1);
+  transition-delay: 0.28s;
+}
+
+.section-couple.is-revealed .bride-card {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.42s;
+}
+
+/* Staggered Countdown Sequence (Numbers and Separators) */
+.section-countdown .countdown-unit,
+.section-countdown .countdown-separator {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1), transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.section-countdown.is-revealed .countdown-unit:nth-of-type(1) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.12s;
+}
+
+.section-countdown.is-revealed .countdown-separator:nth-of-type(1) {
+  opacity: 0.7;
+  transform: translateY(0);
+  transition-delay: 0.20s;
+}
+
+.section-countdown.is-revealed .countdown-unit:nth-of-type(2) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.26s;
+}
+
+.section-countdown.is-revealed .countdown-separator:nth-of-type(2) {
+  opacity: 0.7;
+  transform: translateY(0);
+  transition-delay: 0.34s;
+}
+
+.section-countdown.is-revealed .countdown-unit:nth-of-type(3) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.40s;
+}
+
+.section-countdown.is-revealed .countdown-separator:nth-of-type(3) {
+  opacity: 0.7;
+  transform: translateY(0);
+  transition-delay: 0.48s;
+}
+
+.section-countdown.is-revealed .countdown-unit:nth-of-type(4) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.54s;
+}
+
+.section-countdown .countdown-event-date {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.62s, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.62s;
+}
+
+.section-countdown.is-revealed .countdown-event-date {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Timeline Rows: Visually stable vertical fade-and-rise (no horizontal spine displacement) */
+.timeline-event-row {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1), transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.timeline-event-row.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Staggered revelation of timeline components within the row */
+.timeline-event-row .timeline-time-col {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.08s, transform 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.08s;
+}
+
+.timeline-event-row.is-revealed .timeline-time-col {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.timeline-event-row .node-diamond {
+  opacity: 0;
+  transform: scale(0.65);
+  transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.18s, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.18s;
+}
+
+.timeline-event-row.is-revealed .node-diamond {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.timeline-event-row .timeline-desc-col {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.26s, transform 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.26s;
+}
+
+.timeline-event-row.is-revealed .timeline-desc-col {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Ensure slide classes also maintain spine alignment without lateral displacement */
+.scroll-slide-left,
+.scroll-slide-right {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1), transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.scroll-slide-left.is-revealed,
+.scroll-slide-right.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Timeline Date Blocks & Subtle Rose Floral Reveal */
+.timeline-date-block {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1), transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.timeline-date-block.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Venue Section Reveal Details */
+.section-venue .venue-icon-wrapper {
+  opacity: 0;
+  transform: scale(0.88);
+  transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.1s, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.1s;
+}
+
+.section-venue.is-revealed .venue-icon-wrapper {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.section-venue .venue-name,
+.section-venue .venue-address {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.2s, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.2s;
+}
+
+.section-venue.is-revealed .venue-name,
+.section-venue.is-revealed .venue-address {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.section-venue .venue-actions {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.32s, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.32s;
+}
+
+.section-venue.is-revealed .venue-actions {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Guest Guidelines & Attire Quote Reveal */
+.section-guidelines .dress-code-item,
+.section-guidelines .attire-divider,
+.section-guidelines .attire-quote-block {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.section-guidelines.is-revealed .dress-code-item {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.12s;
+}
+
+.section-guidelines.is-revealed .attire-divider {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.22s;
+}
+
+.section-guidelines.is-revealed .attire-quote-block {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.32s;
+}
+
+/* RSVP Gateway Reveal */
+.section-rsvp-gateway .rsvp-seal-wrapper {
+  opacity: 0;
+  transform: scale(0.92);
+  transition: opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.2s, transform 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.2s;
+}
+
+.section-rsvp-gateway.is-revealed .rsvp-seal-wrapper {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Invitation Hosts & Closing Signoff Staggered Reveal */
+.section-hosts-closing .hosts-card {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.12s, transform 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.12s;
+}
+
+.section-hosts-closing.is-revealed .hosts-card {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.section-hosts-closing .closing-signoff {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.32s, transform 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.32s;
+}
+
+.section-hosts-closing.is-revealed .closing-signoff {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.section-hosts-closing .footer-botanical {
+  opacity: 0;
+  transform: translateY(10px) scale(0.96);
+  transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.5s, transform 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.5s;
+}
+
+.section-hosts-closing.is-revealed .footer-botanical {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* --------------------------------------------------------------------------
+   14. Keyframe Animations
+   -------------------------------------------------------------------------- */
+@keyframes bounceHint {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(6px);
+  }
+}
+
+@keyframes glowBreathe {
+  0%, 100% {
+    opacity: 0.35;
+    transform: scale(0.96);
+  }
+  50% {
+    opacity: 0.75;
+    transform: scale(1.06);
+  }
+}
+
+@keyframes rosePulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes musicRing {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1.45);
+    opacity: 0;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   15. Responsive Adaptations (Mobile-First)
+   -------------------------------------------------------------------------- */
+@media screen and (max-width: 420px) {
+  .envelope-scene {
+    width: 92vw;
+    height: 128vw;
+  }
+  
+  .stationery-sheet {
+    padding: 36px 14px 40px;
+  }
+
+  .deckle-divider {
+    width: calc(100% + 28px);
+    margin: 24px -14px;
+  }
+
+  .person-title {
+    font-size: 1.7rem;
+  }
+
+  .script-heading {
+    font-size: 2.1rem;
+  }
+
+  .countdown-number {
+    font-size: 2rem;
+  }
+
+  .countdown-unit {
+    min-width: 52px;
+  }
+
+  .timeline-container {
+    gap: 22px;
+  }
+
+  .timeline-time-col {
+    width: 36%;
+    padding-right: 12px;
+  }
+
+  .timeline-time {
+    font-size: 1.22rem;
+  }
+
+  .timeline-time-suffix {
+    font-size: 0.6rem;
+  }
+
+  .timeline-desc-col {
+    padding-left: 10px;
+  }
+
+  .event-name {
+    font-size: 1.18rem;
+  }
+
+  .event-description {
+    font-size: 0.86rem;
+    line-height: 1.4;
+  }
+
+  .hosts-card {
+    padding: 20px 14px;
+  }
+
+  .hosts-names {
+    font-size: 1.22rem;
+  }
+
+  .radio-cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media screen and (max-width: 350px) {
+  .stationery-sheet {
+    padding: 32px 10px 36px;
+  }
+
+  .deckle-divider {
+    width: calc(100% + 20px);
+    margin: 20px -10px;
+  }
+
+  .timeline-container {
+    gap: 20px;
+  }
+
+  .timeline-time-col {
+    width: 35%;
+    padding-right: 8px;
+  }
+
+  .timeline-central-spine,
+  .timeline-flower-spine-anchor,
+  .timeline-date-rose-anchor {
+    left: 35%;
+  }
+
+  .timeline-time {
+    font-size: 1.1rem;
+  }
+
+  .timeline-desc-col {
+    padding-left: 8px;
+  }
+
+  .event-name {
+    font-size: 1.1rem;
+  }
+
+  .event-description {
+    font-size: 0.82rem;
+  }
+
+  .hosts-names {
+    font-size: 1.1rem;
+  }
+}
+
+/* Reduced Motion Mode for Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .envelope-card-wrapper.unfolding .flap-top {
+    transform: none;
+    opacity: 0;
+  }
+
+  .first-screen-script,
+  .first-screen-date,
+  .hero-name-groom,
+  .first-screen-ampersand,
+  .hero-name-bride,
+  .first-screen-scroll,
+  .scroll-fade,
+  .scroll-slide-left,
+  .scroll-slide-right,
+  .timeline-date-block,
+  .timeline-date-rose,
+  .timeline-event-row,
+  .timeline-event-row .timeline-time-col,
+  .timeline-event-row .node-diamond,
+  .timeline-event-row .timeline-desc-col,
+  .section-countdown .countdown-unit,
+  .section-countdown .countdown-separator,
+  .section-countdown .countdown-event-date,
+  .section-hosts-closing .hosts-card,
+  .section-hosts-closing .closing-signoff,
+  .section-hosts-closing .footer-botanical,
+  .scroll-fade .script-heading,
+  .scroll-fade .timeline-header-wrap,
+  .section-venue .venue-icon-wrapper,
+  .section-venue .venue-name,
+  .section-venue .venue-address,
+  .section-venue .venue-actions,
+  .section-couple .couple-card,
+  .section-couple .couple-connector,
+  .section-guidelines .dress-code-item,
+  .section-guidelines .attire-divider,
+  .section-guidelines .attire-quote-block {
+    opacity: 1 !important;
+    transform: none !important;
+    letter-spacing: inherit !important;
+    transition: none !important;
+  }
+
+  .first-screen-scroll {
+    transform: translateX(-50%) !important;
+  }
+}

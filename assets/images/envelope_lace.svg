@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 120" fill="none">
+  <!-- Subtle embossed relief shadow and highlight -->
+  <defs>
+    <filter id="emboss" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="1.5" stdDeviation="0.8" flood-color="#ffffff" flood-opacity="0.95"/>
+      <feDropShadow dx="0" dy="-1" stdDeviation="0.8" flood-color="#a89a88" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+  <g filter="url(#emboss)" stroke="#f7f2ea" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <!-- Center Vine -->
+    <path d="M10,60 Q75,30 150,60 T300,60 T450,60 T590,60" />
+    
+    <!-- Leaves & Sprigs -->
+    <path d="M45,46 C40,32 58,26 65,40 C58,45 50,47 45,46 Z" fill="#faf6f0"/>
+    <path d="M75,72 C80,86 98,84 95,70 C88,68 80,70 75,72 Z" fill="#faf6f0"/>
+    <path d="M115,48 C110,34 128,30 135,44 C128,48 120,49 115,48 Z" fill="#faf6f0"/>
+    <path d="M145,70 C152,84 170,80 166,66 C159,65 150,68 145,70 Z" fill="#faf6f0"/>
+    <path d="M195,48 C190,34 208,28 215,42 C208,46 200,48 195,48 Z" fill="#faf6f0"/>
+    <path d="M225,72 C230,86 248,82 245,68 C238,67 230,70 225,72 Z" fill="#faf6f0"/>
+    <path d="M265,50 C260,36 278,30 285,44 C278,48 270,49 265,50 Z" fill="#faf6f0"/>
+    <path d="M295,70 C302,84 320,80 316,66 C309,65 300,68 295,70 Z" fill="#faf6f0"/>
+    <path d="M345,48 C340,34 358,28 365,42 C358,46 350,48 345,48 Z" fill="#faf6f0"/>
+    <path d="M375,72 C380,86 398,82 395,68 C388,67 380,70 375,72 Z" fill="#faf6f0"/>
+    <path d="M415,50 C410,36 428,30 435,44 C428,48 420,49 415,50 Z" fill="#faf6f0"/>
+    <path d="M445,70 C452,84 470,80 466,66 C459,65 450,68 445,70 Z" fill="#faf6f0"/>
+    <path d="M495,48 C490,34 508,28 515,42 C508,46 500,48 495,48 Z" fill="#faf6f0"/>
+    <path d="M525,72 C530,86 548,82 545,68 C538,67 530,70 525,72 Z" fill="#faf6f0"/>
+
+    <!-- Small Rosettes -->
+    <!-- Flower 1 -->
+    <circle cx="95" cy="52" r="7" fill="#faf6f0"/>
+    <circle cx="95" cy="52" r="3" stroke-width="1.2"/>
+    <path d="M90,52 C90,48 95,45 95,45 C95,45 100,48 100,52 C100,56 95,59 95,59 C95,59 90,56 90,52 Z" stroke-width="1"/>
+    
+    <!-- Flower 2 -->
+    <circle cx="245" cy="54" r="8" fill="#faf6f0"/>
+    <circle cx="245" cy="54" r="3.5" stroke-width="1.2"/>
+    <path d="M239,54 C239,49 245,46 245,46 C245,46 251,49 251,54 C251,59 245,62 245,62 C245,62 239,59 239,54 Z" stroke-width="1"/>
+
+    <!-- Flower 3 -->
+    <circle cx="395" cy="52" r="7" fill="#faf6f0"/>
+    <circle cx="395" cy="52" r="3" stroke-width="1.2"/>
+    <path d="M390,52 C390,48 395,45 395,45 C395,45 400,48 400,52 C400,56 395,59 395,59 C395,59 390,56 390,52 Z" stroke-width="1"/>
+    
+    <!-- Flower 4 -->
+    <circle cx="545" cy="54" r="8" fill="#faf6f0"/>
+    <circle cx="545" cy="54" r="3.5" stroke-width="1.2"/>
+  </g>
+</svg>
